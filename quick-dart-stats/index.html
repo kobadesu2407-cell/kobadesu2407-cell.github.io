@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <meta name="description" content="Quick-Dart Stats - スマホ片手に3投3タップ。練習密度を落とさずリアルタイムでダーツの実力を可視化する練習支援ツール。">
+  <meta name="theme-color" content="#0a0a1a">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <title>Quick-Dart Stats | ダーツ練習支援ツール</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Noto+Sans+JP:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- ========== スプラッシュ / モード選択画面 ========== -->
+  <div id="screen-menu" class="screen active">
+    <div class="menu-bg-effects">
+      <div class="bg-circle bg-circle-1"></div>
+      <div class="bg-circle bg-circle-2"></div>
+      <div class="bg-circle bg-circle-3"></div>
+    </div>
+    <header class="menu-header">
+      <div class="logo-container">
+        <div class="logo-icon">
+          <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="32" cy="32" r="28" stroke="url(#logoGrad)" stroke-width="2" opacity="0.3"/>
+            <circle cx="32" cy="32" r="20" stroke="url(#logoGrad)" stroke-width="2" opacity="0.5"/>
+            <circle cx="32" cy="32" r="12" stroke="url(#logoGrad)" stroke-width="2" opacity="0.7"/>
+            <circle cx="32" cy="32" r="4" fill="url(#logoGrad)"/>
+            <line x1="32" y1="2" x2="32" y2="16" stroke="url(#logoGrad)" stroke-width="1.5" opacity="0.4"/>
+            <line x1="32" y1="48" x2="32" y2="62" stroke="url(#logoGrad)" stroke-width="1.5" opacity="0.4"/>
+            <line x1="2" y1="32" x2="16" y2="32" stroke="url(#logoGrad)" stroke-width="1.5" opacity="0.4"/>
+            <line x1="48" y1="32" x2="62" y2="32" stroke="url(#logoGrad)" stroke-width="1.5" opacity="0.4"/>
+            <defs>
+              <linearGradient id="logoGrad" x1="0" y1="0" x2="64" y2="64">
+                <stop offset="0%" stop-color="#00e5ff"/>
+                <stop offset="100%" stop-color="#7c4dff"/>
+              </linearGradient>
+            </defs>
+          </svg>
+        </div>
+        <h1 class="logo-text">
+          <span class="logo-main">Quick-Dart</span>
+          <span class="logo-sub">STATS</span>
+        </h1>
+        <p class="logo-tagline">3 DARTS, 1 TAP. THAT'S ALL.</p>
+      </div>
+    </header>
+
+    <nav class="mode-selection">
+      <button class="mode-card" id="btn-mode-bull" data-mode="bull">
+        <div class="mode-card-glow"></div>
+        <div class="mode-card-content">
+          <div class="mode-icon">
+            <svg viewBox="0 0 48 48" fill="none">
+              <circle cx="24" cy="24" r="20" stroke="currentColor" stroke-width="1.5" opacity="0.3"/>
+              <circle cx="24" cy="24" r="14" stroke="currentColor" stroke-width="1.5" opacity="0.5"/>
+              <circle cx="24" cy="24" r="8" stroke="currentColor" stroke-width="1.5" opacity="0.7"/>
+              <circle cx="24" cy="24" r="3" fill="currentColor"/>
+            </svg>
+          </div>
+          <div class="mode-info">
+            <h2 class="mode-title">BULL練習</h2>
+            <p class="mode-desc">ブル狙いのヒット率を算出</p>
+          </div>
+          <div class="mode-arrow">›</div>
+        </div>
+      </button>
+
+      <button class="mode-card" id="btn-mode-cricket" data-mode="cricket">
+        <div class="mode-card-glow"></div>
+        <div class="mode-card-content">
+          <div class="mode-icon">
+            <svg viewBox="0 0 48 48" fill="none">
+              <text x="24" y="30" text-anchor="middle" fill="currentColor" font-size="20" font-weight="700" font-family="Orbitron">20</text>
+              <rect x="4" y="4" width="40" height="40" rx="6" stroke="currentColor" stroke-width="1.5" opacity="0.4"/>
+            </svg>
+          </div>
+          <div class="mode-info">
+            <h2 class="mode-title">クリケットナンバー</h2>
+            <p class="mode-desc">15〜20＋BULLを集中的に練習</p>
+          </div>
+          <div class="mode-arrow">›</div>
+        </div>
+      </button>
+
+      <button class="mode-card" id="btn-mode-random" data-mode="random">
+        <div class="mode-card-glow"></div>
+        <div class="mode-card-content">
+          <div class="mode-icon">
+            <svg viewBox="0 0 48 48" fill="none">
+              <text x="24" y="30" text-anchor="middle" fill="currentColor" font-size="18" font-weight="700" font-family="Orbitron">?</text>
+              <circle cx="24" cy="24" r="20" stroke="currentColor" stroke-width="1.5" stroke-dasharray="4 4" opacity="0.4"/>
+            </svg>
+          </div>
+          <div class="mode-info">
+            <h2 class="mode-title">ランダムターゲット</h2>
+            <p class="mode-desc">1〜20から瞬発力を鍛える実戦訓練</p>
+          </div>
+          <div class="mode-arrow">›</div>
+        </div>
+      </button>
+    </nav>
+
+    <footer class="menu-footer">
+      <p>ブラウザ完結 · インストール不要</p>
+    </footer>
+  </div>
+
+  <!-- ========== クリケット サブ選択画面 ========== -->
+  <div id="screen-cricket-select" class="screen">
+    <div class="sub-header">
+      <button class="btn-back" id="btn-back-cricket">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
+      </button>
+      <h2 class="sub-title">クリケットナンバー</h2>
+    </div>
+    <div class="cricket-options">
+      <button class="cricket-option-card" data-cricket="20-15">
+        <div class="cricket-option-label">20 → 15</div>
+        <div class="cricket-option-desc">20から15へ順番に練習</div>
+      </button>
+      <button class="cricket-option-card" data-cricket="15-20">
+        <div class="cricket-option-label">15 → 20</div>
+        <div class="cricket-option-desc">15から20へ順番に練習</div>
+      </button>
+      <button class="cricket-option-card cricket-option-random" data-cricket="cricket-random">
+        <div class="cricket-option-label">🎲 RANDOM</div>
+        <div class="cricket-option-desc">15〜20＋BULLからランダム出題</div>
+      </button>
+      <div class="cricket-divider">
+        <span>または特定ナンバーを選択</span>
+      </div>
+      <div class="cricket-number-grid">
+        <button class="cricket-num-btn" data-cricket="15">15</button>
+        <button class="cricket-num-btn" data-cricket="16">16</button>
+        <button class="cricket-num-btn" data-cricket="17">17</button>
+        <button class="cricket-num-btn" data-cricket="18">18</button>
+        <button class="cricket-num-btn" data-cricket="19">19</button>
+        <button class="cricket-num-btn" data-cricket="20">20</button>
+        <button class="cricket-num-btn cricket-bull-btn" data-cricket="BULL">BULL</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========== メイン練習画面 ========== -->
+  <div id="screen-practice" class="screen">
+    <!-- 上部：レーティング表示エリア -->
+    <div class="practice-top">
+      <div class="practice-header">
+        <button class="btn-back" id="btn-back-practice">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
+        </button>
+        <div class="practice-mode-label" id="practice-mode-label">BULL練習</div>
+        <button class="btn-reset" id="btn-reset">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polyline points="23 4 23 10 17 10"/>
+            <path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/>
+          </svg>
+        </button>
+      </div>
+
+      <!-- ダーツカウンター -->
+      <div class="dart-counter" id="dart-counter">
+        <div class="dart-counter-inner">
+          <div class="dart-counter-icons">
+            <svg class="dart-icon-svg" viewBox="0 0 24 24" fill="none">
+              <line x1="4" y1="20" x2="18" y2="6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+              <polygon points="18,6 22,4 20,8 18,6" fill="currentColor"/>
+              <line x1="10" y1="14" x2="7" y2="15" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" opacity="0.5"/>
+              <line x1="10" y1="14" x2="11" y2="17" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" opacity="0.5"/>
+            </svg>
+            <svg class="dart-icon-svg" viewBox="0 0 24 24" fill="none">
+              <line x1="4" y1="20" x2="18" y2="6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+              <polygon points="18,6 22,4 20,8 18,6" fill="currentColor"/>
+              <line x1="10" y1="14" x2="7" y2="15" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" opacity="0.5"/>
+              <line x1="10" y1="14" x2="11" y2="17" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" opacity="0.5"/>
+            </svg>
+            <svg class="dart-icon-svg" viewBox="0 0 24 24" fill="none">
+              <line x1="4" y1="20" x2="18" y2="6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+              <polygon points="18,6 22,4 20,8 18,6" fill="currentColor"/>
+              <line x1="10" y1="14" x2="7" y2="15" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" opacity="0.5"/>
+              <line x1="10" y1="14" x2="11" y2="17" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" opacity="0.5"/>
+            </svg>
+          </div>
+          <div class="dart-counter-value-group">
+            <span class="dart-counter-value" id="dart-counter-value">0</span>
+            <span class="dart-counter-unit">DARTS</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- レーティングカード -->
+      <div class="rating-card">
+        <div class="rating-card-bg"></div>
+        <div class="rating-main">
+          <div class="rating-label">RATING</div>
+          <div class="rating-value" id="rating-value">—</div>
+          <div class="rating-delta" id="rating-delta"></div>
+        </div>
+        <div class="rating-gauge-container">
+          <div class="rating-gauge">
+            <div class="rating-gauge-fill" id="rating-gauge-fill"></div>
+            <div class="rating-gauge-marker" id="rating-gauge-marker"></div>
+          </div>
+          <div class="rating-gauge-labels">
+            <span>1</span>
+            <span>5</span>
+            <span>10</span>
+            <span>15</span>
+            <span>18</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- スタッツ表示 -->
+      <div class="stats-row">
+        <div class="stat-item">
+          <div class="stat-label" id="stat-label-main">PPR</div>
+          <div class="stat-value" id="stat-value-main">—</div>
+        </div>
+        <div class="stat-divider"></div>
+        <div class="stat-item">
+          <div class="stat-label">ROUND</div>
+          <div class="stat-value" id="stat-rounds">0</div>
+        </div>
+        <div class="stat-divider"></div>
+        <div class="stat-item">
+          <div class="stat-label">HIT%</div>
+          <div class="stat-value" id="stat-hitrate">—</div>
+        </div>
+      </div>
+
+      <!-- ターゲット表示（ランダム/クリケット時） -->
+      <div class="target-display" id="target-display">
+        <div class="target-label">TARGET</div>
+        <div class="target-number" id="target-number">20</div>
+        <div class="target-progress" id="target-progress"></div>
+      </div>
+
+      <!-- ラウンド履歴 -->
+      <div class="history-container" id="history-container">
+        <div class="history-label">HISTORY</div>
+        <div class="history-scroll" id="history-scroll"></div>
+      </div>
+    </div>
+
+    <!-- 下部：入力ボタン -->
+    <div class="practice-bottom">
+      <div class="hit-label" id="hit-label">ヒット数を記録</div>
+      <div id="random-score-display" class="random-score-display"></div>
+
+      <!-- BULL用ボタン (0-3) -->
+      <div class="hit-buttons hit-buttons-bull" id="hit-buttons-bull">
+        <button class="hit-btn" data-hits="0">
+          <span class="hit-btn-num">0</span>
+          <span class="hit-btn-label">MISS</span>
+        </button>
+        <button class="hit-btn" data-hits="1">
+          <span class="hit-btn-num">1</span>
+          <span class="hit-btn-label">HIT</span>
+        </button>
+        <button class="hit-btn" data-hits="2">
+          <span class="hit-btn-num">2</span>
+          <span class="hit-btn-label">HIT</span>
+        </button>
+        <button class="hit-btn" data-hits="3">
+          <span class="hit-btn-num">3</span>
+          <span class="hit-btn-label">HIT</span>
+        </button>
+      </div>
+
+      <!-- マーク用ボタン (0-9) -->
+      <div class="hit-buttons hit-buttons-marks" id="hit-buttons-marks" style="display:none">
+        <button class="hit-btn mark-btn" data-hits="0">
+          <span class="hit-btn-num">0</span>
+        </button>
+        <button class="hit-btn mark-btn" data-hits="1">
+          <span class="hit-btn-num">1</span>
+        </button>
+        <button class="hit-btn mark-btn" data-hits="2">
+          <span class="hit-btn-num">2</span>
+        </button>
+        <button class="hit-btn mark-btn" data-hits="3">
+          <span class="hit-btn-num">3</span>
+        </button>
+        <button class="hit-btn mark-btn" data-hits="4">
+          <span class="hit-btn-num">4</span>
+        </button>
+        <button class="hit-btn mark-btn" data-hits="5">
+          <span class="hit-btn-num">5</span>
+        </button>
+        <button class="hit-btn mark-btn" data-hits="6">
+          <span class="hit-btn-num">6</span>
+        </button>
+        <button class="hit-btn mark-btn" data-hits="7">
+          <span class="hit-btn-num">7</span>
+        </button>
+        <button class="hit-btn mark-btn" data-hits="8">
+          <span class="hit-btn-num">8</span>
+        </button>
+        <button class="hit-btn mark-btn" data-hits="9">
+          <span class="hit-btn-num">9</span>
+        </button>
+      </div>
+
+      <div class="undo-container">
+        <button class="btn-undo" id="btn-undo" disabled>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16">
+            <polyline points="1 4 1 10 7 10"/>
+            <path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"/>
+          </svg>
+          <span>取り消し</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========== リザルト画面 ========== -->
+  <div id="screen-result" class="screen">
+    <div class="result-container">
+      <div class="result-header">
+        <h2 class="result-title">練習結果</h2>
+      </div>
+      <div class="result-rating-card">
+        <div class="result-rating-label">FINAL RATING</div>
+        <div class="result-rating-value" id="result-rating">—</div>
+      </div>
+      <div class="result-stats-grid">
+        <div class="result-stat">
+          <div class="result-stat-label">ラウンド数</div>
+          <div class="result-stat-value" id="result-rounds">0</div>
+        </div>
+        <div class="result-stat">
+          <div class="result-stat-label" id="result-main-label">PPR</div>
+          <div class="result-stat-value" id="result-main-stat">—</div>
+        </div>
+        <div class="result-stat">
+          <div class="result-stat-label">ヒット率</div>
+          <div class="result-stat-value" id="result-hitrate">—</div>
+        </div>
+        <div class="result-stat">
+          <div class="result-stat-label">総投数</div>
+          <div class="result-stat-value" id="result-total-darts">0</div>
+        </div>
+      </div>
+      <div class="result-chart-container">
+        <div class="result-chart-label">レーティング推移</div>
+        <canvas id="result-chart" width="320" height="160"></canvas>
+      </div>
+      <div class="result-actions">
+        <button class="btn-result-retry" id="btn-result-retry">もう一度</button>
+        <button class="btn-result-home" id="btn-result-home">モード選択に戻る</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- フィードバックトースト -->
+  <div class="toast" id="toast"></div>
+
+  <script src="app.js"></script>
+</body>
+</html>
